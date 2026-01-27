@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
     );
 
     const sla = slaRows[0];
-    const ticketId = generateTicketId();
+    const ticketId = await generateTicketId();
     const createdAt = new Date();
     const responseDeadline = calculateDeadline(createdAt, sla.response_time_minutes);
     const resolutionDeadline = calculateDeadline(createdAt, sla.resolution_time_minutes);

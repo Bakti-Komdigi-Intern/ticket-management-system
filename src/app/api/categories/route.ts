@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     }
 
     const [rows] = await pool.query<RowDataPacket[]>(
-      'SELECT * FROM categories ORDER BY name'
+      'SELECT * FROM categories ORDER BY id'
     );
 
     return NextResponse.json(rows);

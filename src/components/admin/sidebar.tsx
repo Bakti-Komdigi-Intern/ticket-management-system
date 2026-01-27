@@ -75,7 +75,7 @@ export function Sidebar() {
       {/* Footer */}
       {!sidebarCollapsed && (
         <div className="absolute bottom-4 left-4 right-4 text-xs text-gray-500 text-center">
-          © 2026 IT Helpdesk
+          &copy; {new Date().getFullYear()} TMS BAKTI Komdigi.
         </div>
       )}
     </aside>

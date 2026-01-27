@@ -15,6 +15,15 @@ interface CreateTicketData {
   assigned_to?: string;
 }
 
+interface UpdateTicketData {
+  status?: string;
+  assigned_to?: string;
+  subject?: string;
+  description?: string;
+  category_id?: string;
+  priority?: string;
+}
+
 export function useTickets(filters?: TicketFilters) {
   const queryClient = useQueryClient();
 
@@ -54,6 +63,46 @@ export function useTickets(filters?: TicketFilters) {
     },
   });
 
+  const updateMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: string; data: UpdateTicketData }) => {
+      const res = await fetch(`/api/tickets/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || 'Failed to update ticket');
+      }
+
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tickets'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await fetch(`/api/tickets/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || 'Failed to delete ticket');
+      }
+
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tickets'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+    },
+  });
+
   return {
     tickets: tickets || [],
     isLoading,
@@ -61,5 +110,9 @@ export function useTickets(filters?: TicketFilters) {
     refetch,
     createTicket: createMutation.mutate,
     isCreating: createMutation.isPending,
+    updateTicket: updateMutation.mutate,
+    isUpdating: updateMutation.isPending,
+    deleteTicket: deleteMutation.mutate,
+    isDeleting: deleteMutation.isPending,
   };
 }
