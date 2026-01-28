@@ -19,7 +19,9 @@ export async function GET(
         t.*,
         c.name as category_name,
         u1.name as reporter_name,
-        u2.name as assigned_name
+        u1.email as reporter_email,
+        u2.name as assigned_name,
+        u2.email as assigned_email
       FROM tickets t
       LEFT JOIN categories c ON t.category_id = c.id
       LEFT JOIN users u1 ON t.reporter_id = u1.id

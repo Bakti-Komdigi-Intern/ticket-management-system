@@ -19,6 +19,13 @@ const COLORS = {
   P4: '#52C41A',
 };
 
+const PRIORITY_NAMES: Record<string, string> = {
+  'P1': 'Critical',
+  'P2': 'High',
+  'P3': 'Medium',
+  'P4': 'Low',
+};
+
 export default function DashboardPage() {
   const { stats, priorityStats, slaConfig, recentTickets, isLoading } = useDashboard();
 

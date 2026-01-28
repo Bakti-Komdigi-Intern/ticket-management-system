@@ -16,6 +16,13 @@ import {
 import { formatDate, getPriorityColor, getStatusColor } from '@/lib/utils';
 import Link from 'next/link';
 
+const PRIORITY_NAMES: Record<string, string> = {
+  'P1': 'Critical',
+  'P2': 'High',
+  'P3': 'Medium',
+  'P4': 'Low',
+};
+
 export default function TicketsPage() {
   const [search, setSearch] = useState('');
   const [priority, setPriority] = useState('');
@@ -218,7 +225,7 @@ export default function TicketsPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 py-1 text-xs font-medium rounded ${getPriorityColor(ticket.priority)}`}>
-                            {ticket.priority}
+                            {ticket.priority} - {PRIORITY_NAMES[ticket.priority]}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -538,7 +545,7 @@ function EditTicketModal({
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-gray-700">Prioritas:</span>
               <span className={`px-2 py-1 text-xs font-medium rounded ${getPriorityColor(ticket.priority)}`}>
-                {ticket.priority}
+                {ticket.priority} - {PRIORITY_NAMES[ticket.priority]}
               </span>
             </div>
           </div>
