@@ -54,7 +54,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
               <Bell size={20} />
             </button>
             
-            {/* ✅ Masukkan Komponen UserProfile di sini */}
+           
             <UserProfile name={user.name} role={user.role} />
             
           </div>
